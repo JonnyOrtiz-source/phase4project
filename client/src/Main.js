@@ -8,13 +8,14 @@ import NewShoeForm from './shoes/NewShoeForm';
 import ShoeEditForm from './shoes/ShoeEditForm';
 import ShoeShow from './shoes//ShoeShow';
 import NewUserShoeForm from './shoes/NewUserShoeForm';
+import OwnedShoes from './shoes/OwnedShoes';
 
 function Main() {
    const [currentUser, setCurrentUser] = useState(null);
    const [shoes, setShoes] = useState([]);
    const [shoe_types, setShoeTypes] = useState([]);
    const [currentShoeId, setCurrentShoeId] = useState('');
-   const [userShoes, setUserShoes] = useState([]);
+   // const [userShoes, setUserShoes] = useState([]);
 
    useEffect(() => {
       fetch(`/shoe_types`)
@@ -48,15 +49,15 @@ function Main() {
          });
    }, []);
 
-   useEffect(() => {
-      fetch(`/user_shoes/`).then((res) => {
-         if (res.ok) {
-            res.json().then((userShoes) => {
-               setUserShoes(userShoes);
-            });
-         }
-      });
-   }, []);
+   // useEffect(() => {
+   //    fetch(`/user_shoes/`).then((res) => {
+   //       if (res.ok) {
+   //          res.json().then((userShoes) => {
+   //             setUserShoes(userShoes);
+   //          });
+   //       }
+   //    });
+   // }, []);
 
    const addShoe = (newShoe) => {
       setShoes((shoes) => [...shoes, newShoe]);
@@ -101,14 +102,19 @@ function Main() {
                   currentUser={currentUser}
                   shoes={shoes}
                   shoe_types={shoe_types}
-                  userShoes={userShoes}
                   deleteShoe={deleteShoe}
                   handleCurrentShoeId={handleCurrentShoeId}
                />
             </Route>
+
             <Route exact path="/shoes/new">
                <NewShoeForm addShoe={addShoe} shoe_types={shoe_types} />
             </Route>
+
+            <Route exact path="/user_shoes">
+               <OwnedShoes currentUser={currentUser} />
+            </Route>
+
             <Route exact path="/user_shoes/new">
                <NewUserShoeForm
                   currentShoeId={currentShoeId}

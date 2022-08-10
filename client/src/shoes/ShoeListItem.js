@@ -1,33 +1,26 @@
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
+// import { useState } from 'react';
 
 function ShoeListItem({
-   user,
+   currentUser,
    shoe,
    deleteShoe,
    shoe_types,
    userShoes,
    handleCurrentShoeId,
 }) {
-   const [owned, setOwned] = useState(false);
+   // const [owned, setOwned] = useState(false);
 
    const { id, shoe_name, brand, sex, image_url, shoe_type_id } = shoe;
 
-   userShoes.forEach((userShoeObj) => {
-      console.log(
-         // shoe.id,
-         // user.id,
-         userShoeObj.id,
-         userShoeObj.shoe_id,
-         userShoeObj.user_id
-      );
-   });
-   //                // if (
-   //                //    userShoeObj.shoe_id === id &&
-   //                //    userShoeObj.user_id === user.id
-   //                // ) {
-   //                //    setOwned(true);
-   // }
+   // userShoes.forEach((userShoeObj) => {
+   //    if (
+   //       userShoeObj.shoe_id === id &&
+   //       userShoeObj.user_id === currentUser.id
+   //    ) {
+   //       setOwned(true);
+   //    }
+   // });
 
    const shoe_type = shoe_types.find(
       (shoe_type) => shoe_type.id === shoe_type_id
@@ -62,14 +55,14 @@ function ShoeListItem({
          </figure>
 
          <div className="shoe-actions">
-            {!owned && (
-               <Link
-                  to={`/user_shoes/new`}
-                  onClick={() => handleCurrentShoeId(id)}
-               >
-                  ✅
-               </Link>
-            )}
+            {/* {!owned && ( */}
+            <Link
+               to={`/user_shoes/new`}
+               onClick={() => handleCurrentShoeId(id)}
+            >
+               ✅
+            </Link>
+            {/* )} */}
             &nbsp; &nbsp;
             <Link to={`/shoes/${id}/edit`}>✍🏼</Link>
             &nbsp; &nbsp;
