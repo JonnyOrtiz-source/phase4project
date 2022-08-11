@@ -6,22 +6,23 @@ import Login from './Login';
 import ShoesList from './shoes/ShoesList';
 import NewShoeForm from './shoes/NewShoeForm';
 import ShoeEditForm from './shoes/ShoeEditForm';
-import ShoeShow from './shoes//ShoeShow';
+import ShoeShow from './shoes/ShoeShow';
+// import UserShoeShow from './shoes/UserShoeShow';
 import NewUserShoeForm from './shoes/NewUserShoeForm';
 import OwnedShoes from './shoes/OwnedShoes';
 
 function Main() {
    const [currentUser, setCurrentUser] = useState(null);
    const [shoes, setShoes] = useState([]);
-   const [shoe_types, setShoeTypes] = useState([]);
+   const [shoeTypes, setShoeTypes] = useState([]);
    const [currentShoeId, setCurrentShoeId] = useState('');
-   // const [userShoes, setUserShoes] = useState([]);
+   const [userShoes, setUserShoes] = useState([]);
 
    useEffect(() => {
       fetch(`/shoe_types`)
          .then((r) => r.json())
-         .then((shoe_type) => {
-            setShoeTypes(shoe_type);
+         .then((shoeType) => {
+            setShoeTypes(shoeType);
          })
          .catch((err) => {
             alert(err);
@@ -49,17 +50,18 @@ function Main() {
          });
    }, []);
 
-   // useEffect(() => {
-   //    fetch(`/user_shoes/`).then((res) => {
-   //       if (res.ok) {
-   //          res.json().then((userShoes) => {
-   //             setUserShoes(userShoes);
-   //          });
-   //       }
-   //    });
-   // }, []);
+   useEffect(() => {
+      fetch(`/user_shoes`)
+         .then((r) => r.json())
+         .then((userShoes) => {
+            setUserShoes(userShoes);
+         })
+         .catch((err) => {
+            alert(err);
+         });
+   }, []);
 
-   const addShoe = (newShoe) => {
+   const handleAddShoe = (newShoe) => {
       setShoes((shoes) => [...shoes, newShoe]);
    };
 
@@ -87,8 +89,12 @@ function Main() {
       setCurrentUser(user);
    };
 
-   const handleAddUserShoe = (shoe) => {
-      console.log(shoe);
+   const handleSetUserShoes = (userShoes) => {
+      setUserShoes(userShoes);
+   };
+
+   const handleAddUserShoe = (newUserShoe) => {
+      setUserShoes((userShoes) => [...userShoes, newUserShoe]);
    };
 
    if (!currentUser) return <Login handleCurrentUser={handleCurrentUser} />;
@@ -101,28 +107,36 @@ function Main() {
                <ShoesList
                   currentUser={currentUser}
                   shoes={shoes}
-                  shoe_types={shoe_types}
+                  shoeTypes={shoeTypes}
                   deleteShoe={deleteShoe}
                   handleCurrentShoeId={handleCurrentShoeId}
                />
             </Route>
 
             <Route exact path="/shoes/new">
-               <NewShoeForm addShoe={addShoe} shoe_types={shoe_types} />
+               <NewShoeForm
+                  handleAddShoe={handleAddShoe}
+                  shoeTypes={shoeTypes}
+               />
             </Route>
 
             <Route exact path="/user_shoes">
-               <OwnedShoes currentUser={currentUser} />
+               <OwnedShoes
+                  currentUser={currentUser}
+                  userShoes={userShoes}
+                  handleSetUserShoes={handleSetUserShoes}
+               />
             </Route>
 
             <Route exact path="/user_shoes/new">
                <NewUserShoeForm
                   currentShoeId={currentShoeId}
                   currentUser={currentUser}
-                  shoe_types={shoe_types}
+                  shoeTypes={shoeTypes}
                   handleAddUserShoe={handleAddUserShoe}
                />
             </Route>
+
             <Route
                exact
                path="/shoes/:id/edit"
@@ -132,10 +146,11 @@ function Main() {
                         (shoe) => shoe.id === parseInt(match.params.id)
                      )}
                      updateShoe={updateShoe}
-                     shoe_types={shoe_types}
+                     shoeTypes={shoeTypes}
                   />
                )}
             />
+
             <Route
                exact
                path="/shoes/:id"
@@ -145,14 +160,20 @@ function Main() {
                         (shoe) => shoe.id === parseInt(match.params.id)
                      )}
                      deleteShoe={deleteShoe}
-                     shoe_types={shoe_types}
+                     shoeTypes={shoeTypes}
                      handleCurrentShoeId={handleCurrentShoeId}
                   />
                )}
             />
+
+            {/* <Route exact path="/user_shoes/:id">
+               <UserShoeShow currentUser={currentUser} />
+            </Route> */}
+
             <Route path="/login">
                <Login handleCurrentUser={handleCurrentUser} />
             </Route>
+
             <Route path="/">
                <Welcome />
             </Route>

@@ -1,15 +1,24 @@
 import OwnedShoeItem from './OwnedShoeItem';
 
-function OwnedShoes({ currentUser }) {
-   const ownedShoesEl = currentUser.shoes.map((shoe) => (
-      <OwnedShoeItem key={shoe.id} shoe={shoe} />
-   ));
+function OwnedShoes({ currentUser, userShoes, handleSetUserShoes }) {
+   const deleteUserShoe = (deletedUserShoe) => {
+      const updatedUserShoes = userShoes.filter(
+         (userShoe) => userShoe.id !== deletedUserShoe.id
+      );
+      handleSetUserShoes(updatedUserShoes);
+   };
 
-   console.log(currentUser.shoes);
+   const ownedShoesEl = currentUser.user_shoes.map((userShoe) => (
+      <OwnedShoeItem
+         key={userShoe.id}
+         userShoe={userShoe}
+         deleteUserShoe={deleteUserShoe}
+      />
+   ));
 
    return (
       <div>
-         <h2>Own Shoes</h2>
+         <h2>Your Shoes</h2>
          <div className="wrapper">{ownedShoesEl}</div>
       </div>
    );

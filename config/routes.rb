@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   
-  resources :user_shoes
+  resources :user_shoes, only: [:index, :create, :show, :destroy]
   resources :shoes
   resources :shoe_types
   resources :users, only: [:index, :create, :show]

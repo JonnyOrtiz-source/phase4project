@@ -4,16 +4,16 @@ function ShoesList({
    currentUser,
    shoes,
    deleteShoe,
-   shoe_types,
+   shoeTypes,
    userShoes,
    handleCurrentShoeId,
 }) {
    const shoesEl = shoes.map((shoe) => (
       <ShoeListItem
-         currentUser={currentUser}
          key={shoe.id}
+         currentUser={currentUser}
          shoe={shoe}
-         shoe_types={shoe_types}
+         shoeTypes={shoeTypes}
          userShoes={userShoes}
          deleteShoe={deleteShoe}
          handleCurrentShoeId={handleCurrentShoeId}

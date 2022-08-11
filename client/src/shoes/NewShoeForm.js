@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useForm } from '../hooks/useForm';
 
-const Dropdown = ({ label, value, options, handleChange, shoe_types }) => {
+const Dropdown = ({ label, value, options, handleChange, shoeTypes }) => {
    return (
       <label>
          {label}
@@ -17,7 +17,14 @@ const Dropdown = ({ label, value, options, handleChange, shoe_types }) => {
    );
 };
 
-function NewShoeForm({ addShoe, shoe_types }) {
+function NewShoeForm({ handleAddShoe, shoeTypes }) {
+   // need addShoe to set state
+   // need shoeTypes to build the drop down
+
+   const [shoeType, setShoeType] = useState('1');
+
+   const history = useHistory();
+
    const initialData = {
       shoe_name: '',
       brand: '',
@@ -25,19 +32,15 @@ function NewShoeForm({ addShoe, shoe_types }) {
       image_url: 'https://jallieortiz.com/media/Benji.jpeg',
    };
 
-   const { formData, setFormData, handleChange } = useForm(initialData);
+   const { formData, handleChange } = useForm(initialData);
 
-   const options = shoe_types.map((shoe_type) => {
-      return { label: shoe_type.shoe_type_name, value: shoe_type.id };
+   const options = shoeTypes.map((shoeType) => {
+      return { label: shoeType.shoe_type_name, value: shoeType.id };
    });
-
-   const [shoeType, setShoeType] = useState('');
 
    const handleShoeTypeChange = (e) => {
       setShoeType(e.target.value);
    };
-
-   const history = useHistory();
 
    const handleSubmit = async (e) => {
       e.preventDefault();
@@ -54,14 +57,7 @@ function NewShoeForm({ addShoe, shoe_types }) {
       fetch(`/shoes`, configObj)
          .then((r) => r.json())
          .then((newShoe) => {
-            addShoe(newShoe);
-            setFormData({
-               shoe_name: '',
-               brand: '',
-               sex: '',
-               image_url: '',
-               shoe_type_id: '',
-            });
+            handleAddShoe(newShoe);
             history.push(`/shoes/`);
          });
    };
@@ -69,6 +65,7 @@ function NewShoeForm({ addShoe, shoe_types }) {
    return (
       <div>
          <h2>New Shoe</h2>
+         {JSON.stringify(shoeType)}
          <div className="form-center">
             <form onSubmit={handleSubmit}>
                <fieldset>

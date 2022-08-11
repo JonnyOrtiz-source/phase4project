@@ -1,11 +1,27 @@
 import { Link } from 'react-router-dom';
 
-function OwnedShoeItem({ shoe }) {
-   const { id, shoe_name, brand, sex, image_url, shoe_type_name } = shoe;
+function OwnedShoeItem({ userShoe, deleteUserShoe }) {
+   const {
+      id,
+      shoe_name,
+      brand,
+      sex,
+      image_url,
+      shoe_type_name,
+      purchase_date,
+      color,
+      size,
+   } = userShoe;
+
+   const handleDelete = () => {
+      fetch(`/user_shoes/${id}`, {
+         method: 'DELETE',
+      });
+      deleteUserShoe(userShoe);
+   };
 
    return (
       <div>
-         {/* {JSON.stringify(shoe)} */}
          <div className="card" key={id}>
             <figure>
                <img
@@ -23,24 +39,17 @@ function OwnedShoeItem({ shoe }) {
                   <p>Brand: {brand}</p>
                   <p>Sex: {sex}</p>
                   <p>Shoe Type: {shoe_type_name}</p>
-                  {/* <p>Purchase Date: {purchase_date}</p>
+                  <p>Purchase Date: {purchase_date}</p>
                   <p>Color: {color}</p>
-                  <p>Size: {size}</p> */}
+                  <p>Size: {size}</p>
                </div>
             </figure>
 
-            {/* <div className="shoe-actions">
-            <Link
-               to={`/user_shoes/new`}
-               onClick={() => handleCurrentShoeId(id)}
-            >
-               ✅
-            </Link>
-            &nbsp; &nbsp;
-            <Link to={`/shoes/${id}/edit`}>✍🏼</Link>
-            &nbsp; &nbsp;
-            <button onClick={() => handleDelete(id)}>❌</button>
-         </div> */}
+            <div className="shoe-actions">
+               <Link to={`/shoes/${id}/edit`}>✍🏼</Link>
+               &nbsp; &nbsp;
+               <button onClick={() => handleDelete(id)}>❌</button>
+            </div>
          </div>
       </div>
    );

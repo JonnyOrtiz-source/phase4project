@@ -1,30 +1,16 @@
 import { Link } from 'react-router-dom';
-// import { useState } from 'react';
 
 function ShoeListItem({
    currentUser,
    shoe,
    deleteShoe,
-   shoe_types,
+   shoeTypes,
    userShoes,
    handleCurrentShoeId,
 }) {
-   // const [owned, setOwned] = useState(false);
-
    const { id, shoe_name, brand, sex, image_url, shoe_type_id } = shoe;
 
-   // userShoes.forEach((userShoeObj) => {
-   //    if (
-   //       userShoeObj.shoe_id === id &&
-   //       userShoeObj.user_id === currentUser.id
-   //    ) {
-   //       setOwned(true);
-   //    }
-   // });
-
-   const shoe_type = shoe_types.find(
-      (shoe_type) => shoe_type.id === shoe_type_id
-   );
+   const shoe_type = shoeTypes.find((shoeType) => shoeType.id === shoe_type_id);
 
    const handleDelete = () => {
       fetch(`/shoes/${id}`, {

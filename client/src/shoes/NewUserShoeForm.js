@@ -8,6 +8,8 @@ function NewUserShoeForm({
    shoe_types,
    handleAddUserShoe,
 }) {
+   // currentShoeId is the shoe id of the shoe that was clicked to own
+   // it's used to fetch the individual shoe object to be owned
    const [currentShoe, setCurrentShoe] = useState('');
 
    const history = useHistory();
@@ -15,7 +17,10 @@ function NewUserShoeForm({
    useEffect(() => {
       fetch(`/shoes/${currentShoeId}`)
          .then((r) => r.json())
-         .then((shoe) => setCurrentShoe(shoe));
+         .then((shoe) => {
+            console.log(shoe);
+            setCurrentShoe(shoe);
+         });
    }, [currentShoeId]);
 
    const initialData = {
@@ -25,14 +30,6 @@ function NewUserShoeForm({
    };
 
    const { formData, handleChange } = useForm(initialData);
-
-   const currentShoeTypeName = !shoe_types.find(
-      (shoe_type) => currentShoe.shoe_type_id === shoe_type.id
-   )
-      ? 'tbd'
-      : shoe_types.find(
-           (shoe_type) => currentShoe.shoe_type_id === shoe_type.id
-        ).shoe_type_name;
 
    const handleSubmit = async (e) => {
       e.preventDefault();
@@ -54,13 +51,14 @@ function NewUserShoeForm({
          .then((r) => r.json())
          .then((newUserShoe) => {
             handleAddUserShoe(newUserShoe);
-            history.push(`/shoes`);
+            history.push(`/user_shoes`);
          });
    };
 
    return (
       <div>
          <h2>Own Shoe</h2>
+         {JSON.stringify(currentUser)}
          <figure>
             <img src={currentShoe.image_url} alt={currentShoe.shoe_name} />
          </figure>
@@ -68,7 +66,7 @@ function NewUserShoeForm({
             <p>Shoe Name: {currentShoe.shoe_name}</p>
             <p>Brand: {currentShoe.brand}</p>
             <p>Sex: {currentShoe.sex}</p>
-            <p>Shoe Type: {currentShoeTypeName}</p>
+            <p>Shoe Type: {currentShoe.shoe_type_name}</p>
          </div>
          <div className="form-center">
             <form onSubmit={handleSubmit}>

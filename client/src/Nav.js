@@ -21,7 +21,7 @@ function Nav({ handleCurrentUser }) {
          </li>
          <li className="nav-item">
             <a className="nav-link" href="/user_shoes">
-               Own a Shoe
+               Your Shoes
             </a>
          </li>
          <li className="nav-item">
