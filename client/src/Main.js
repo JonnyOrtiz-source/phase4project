@@ -97,6 +97,13 @@ function Main() {
       setUserShoes((userShoes) => [...userShoes, newUserShoe]);
    };
 
+   const deleteUserShoe = (deletedUserShoe) => {
+      const updatedUserShoes = userShoes.filter(
+         (userShoe) => userShoe.id !== deletedUserShoe.id
+      );
+      setUserShoes(updatedUserShoes);
+   };
+
    if (!currentUser) return <Login handleCurrentUser={handleCurrentUser} />;
 
    return (
@@ -124,6 +131,7 @@ function Main() {
                <OwnedShoes
                   currentUser={currentUser}
                   userShoes={userShoes}
+                  deleteUserShoe={deleteUserShoe}
                   handleSetUserShoes={handleSetUserShoes}
                />
             </Route>

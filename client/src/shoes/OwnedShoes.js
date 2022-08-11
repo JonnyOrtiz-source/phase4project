@@ -1,13 +1,11 @@
 import OwnedShoeItem from './OwnedShoeItem';
 
-function OwnedShoes({ currentUser, userShoes, handleSetUserShoes }) {
-   const deleteUserShoe = (deletedUserShoe) => {
-      const updatedUserShoes = userShoes.filter(
-         (userShoe) => userShoe.id !== deletedUserShoe.id
-      );
-      handleSetUserShoes(updatedUserShoes);
-   };
-
+function OwnedShoes({
+   currentUser,
+   userShoes,
+   deleteUserShoe,
+   handleSetUserShoes,
+}) {
    const ownedShoesEl = currentUser.user_shoes.map((userShoe) => (
       <OwnedShoeItem
          key={userShoe.id}
