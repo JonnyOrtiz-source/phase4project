@@ -17,7 +17,7 @@ const Dropdown = ({ label, value, options, handleChange }) => {
    );
 };
 
-function ShoeEditForm({ shoe = {}, updateShoe, shoe_types }) {
+function ShoeEditForm({ shoe = {}, updateShoe, shoeTypes }) {
    // TODO: setFormData should be able to invoke (formData => {...formData, shoe_type_id: shoe_type.id})
 
    const initialData = {
@@ -35,7 +35,7 @@ function ShoeEditForm({ shoe = {}, updateShoe, shoe_types }) {
       setShoeType(e.target.value);
    };
 
-   const options = shoe_types.map((shoe_type) => {
+   const options = shoeTypes.map((shoe_type) => {
       return { label: shoe_type.shoe_type_name, value: shoe_type.id };
    });
 
