@@ -5,7 +5,6 @@ function ShoeListItem({
    shoe,
    deleteShoe,
    shoeTypes,
-   userShoes,
    handleCurrentShoeId,
 }) {
    const { id, shoe_name, brand, sex, image_url, shoe_type_id } = shoe;

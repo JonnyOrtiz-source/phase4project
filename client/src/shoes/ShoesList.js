@@ -14,7 +14,6 @@ function ShoesList({
          currentUser={currentUser}
          shoe={shoe}
          shoeTypes={shoeTypes}
-         userShoes={userShoes}
          deleteShoe={deleteShoe}
          handleCurrentShoeId={handleCurrentShoeId}
       />

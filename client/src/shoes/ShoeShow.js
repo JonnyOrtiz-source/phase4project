@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom';
 
-function ShoeShow({ shoe = {}, deleteShoe, shoe_types, handleCurrentShoeId }) {
+function ShoeShow({ shoe = {}, deleteShoe, shoeTypes, handleCurrentShoeId }) {
    const { id, shoe_name, brand, sex, image_url, shoe_type_id } = shoe;
 
-   const shoe_type = shoe_types.find(
+   const shoe_type = shoeTypes.find(
       (shoe_type) => shoe_type.id === shoe_type_id
    );
 
